@@ -1,5 +1,6 @@
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
+    <!-- https://element.eleme.io/#/zh-CN/component/menu -->
     <el-menu
       :show-timeout="200"
       :default-active="$route.path"
@@ -19,6 +20,7 @@ import { mapGetters } from 'vuex'
 import SidebarItem from './SidebarItem'
 
 export default {
+  //https://cn.vuejs.org/v2/guide/components-registration.html
   components: { SidebarItem },
   computed: {
     ...mapGetters([
