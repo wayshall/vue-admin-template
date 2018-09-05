@@ -1,8 +1,9 @@
 import request from '@/utils/request'
 
 export function login(username, password) {
+  console.log('login...')
   return request({
-    url: '/user/login',
+    url: '/dologin',
     method: 'post',
     data: {
       username,

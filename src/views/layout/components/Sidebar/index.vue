@@ -20,7 +20,7 @@ import { mapGetters } from 'vuex'
 import SidebarItem from './SidebarItem'
 
 export default {
-  //https://cn.vuejs.org/v2/guide/components-registration.html
+  // https://cn.vuejs.org/v2/guide/components-registration.html
   components: { SidebarItem },
   computed: {
     ...mapGetters([
