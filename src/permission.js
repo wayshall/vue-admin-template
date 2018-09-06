@@ -3,7 +3,7 @@ import store from './store'
 import NProgress from 'nprogress' // Progress 进度条
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
-import { getToken } from '@/utils/auth' // 验权
+// import { getToken } from '@/utils/auth' // 验权
 
 const whiteList = ['/login'] // 不重定向白名单
 
@@ -11,16 +11,23 @@ const whiteList = ['/login'] // 不重定向白名单
 
 router.beforeEach((to, from, next) => {
   NProgress.start()
-  let isLogin = store.getters.login
-  if (isLogin===true) {
+  const isLogin = store.getters.login
+  console.log(`to: ${to.path}, isLogin: ${isLogin}`)
+  if (isLogin === true) {
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
-      if (store.getters.roles.length === 0) {
+      const username = store.getters.username
+      if (!username || username.length < 1) {
         store.dispatch('GetInfo').then(res => { // 拉取用户信息
-          next()
+          next({ ...to, replace: true })
+          // sotre.dispatch('getRouters').then(res => {
+          //   router.addRoutes(store.getters.roleRouters)
+          //   next({ ...to, replace: true }) // hack方法确保addRoutes已完成
+          // })
         }).catch((err) => {
+          console.log('get user info error:' + e)
           store.dispatch('FedLogOut').then(() => {
             Message.error(err || 'Verification failed, please login again')
             next({ path: '/' })

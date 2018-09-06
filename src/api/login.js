@@ -1,7 +1,6 @@
 import request from '@/utils/request'
 
 export function login(username, password) {
-  console.log('login...')
   return request({
     url: '/dologin',
     method: 'post',
@@ -13,7 +12,7 @@ export function login(username, password) {
 }
 
 export function getInfo() {
-  return request.get('/userProfile')
+  return request.get('/web-admin/userProfile.json')
 }
 
 export function logout() {
@@ -21,4 +20,8 @@ export function logout() {
     url: '/user/logout',
     method: 'post'
   })
+}
+
+export function getRouters(){
+  return request.get('/web-admin/routers')
 }

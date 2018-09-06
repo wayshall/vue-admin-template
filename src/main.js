@@ -14,8 +14,10 @@ import store from './store'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import {installAll} from '@/utils/plugins'
 
 Vue.use(ElementUI, { locale })
+installAll(Vue)
 
 Vue.config.productionTip = false
 
@@ -23,5 +25,9 @@ new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+
+  created() {
+    console.log(this.$http ? 'axios workd!' : 'axios uninstall~')
+  }
 })
