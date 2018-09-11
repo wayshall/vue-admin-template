@@ -2,9 +2,9 @@ import service from './request'
 import lodash from 'lodash'
 
 export const axiosPlugin = {
-  install: function(Vue, name = '$http'){
+  install: function(Vue, name = '$http') {
     console.log('install axios plugin...')
-    Object.defineProperty(Vue.prototype, name, { value: service})
+    Object.defineProperty(Vue.prototype, name, { value: service })
   }
 }
 

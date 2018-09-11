@@ -22,6 +22,10 @@ export function logout() {
   })
 }
 
-export function getRouters(){
-  return request.get('/web-admin/routers')
+export function getRouters() {
+  return request.get('/web-admin/vueRouters.json', {
+    headers: {
+      'x-response-view': 'default'
+    }
+  })
 }

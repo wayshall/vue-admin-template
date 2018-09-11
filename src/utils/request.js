@@ -2,21 +2,23 @@ import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 import qs from 'qs'
-import { getToken } from '@/utils/auth'
 
 // 创建axios实例
 const service = axios.create({
-  headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}, 
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+    'x-response-view': 'default'
+  },
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 30000 // 请求超时时间
+  timeout: 120000 // 请求超时时间
 })
 
 // request拦截器
 service.interceptors.request.use(
   config => {
-    config.headers['X-Requested-With']='XMLHttpRequest'
-    let contentType = config.headers['Content-Type']
-    if(config.data && contentType && contentType.indexOf('application/x-www-form-urlencoded')!=-1){
+    config.headers['X-Requested-With'] = 'XMLHttpRequest'
+    const contentType = config.headers['Content-Type']
+    if (config.data && contentType && contentType.indexOf('application/x-www-form-urlencoded') !== -1) {
       config.data = qs.stringify(config.data)
     }
     return config
@@ -34,7 +36,9 @@ service.interceptors.response.use(
     /**
      * code为非20000是抛错 可结合自己业务进行修改
      */
-    const res = response.data
+    console.log('response :')
+    console.log(response)
+    const res = response.data.data
     if (res.error) {
       Message({
         message: res.message,
@@ -60,7 +64,7 @@ service.interceptors.response.use(
       }
       return Promise.reject('error')
     } else {
-      return response.data
+      return res
     }
   },
   error => {

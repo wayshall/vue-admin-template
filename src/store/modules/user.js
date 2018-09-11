@@ -1,6 +1,43 @@
 import { login, logout, getInfo, getRouters } from '@/api/login'
 import { removeToken } from '@/utils/auth'
 
+import Layout from '@/views/layout/Layout'
+
+function filterAndEnhanceRouters(routers) {
+  // routers.forEach(router => {
+  //   const viewPath = router.componentViewPath
+  //   if (!viewPath) {
+  //     // ignore
+  //   } else if (viewPath === 'Layout') {
+  //     router.component = Layout
+  //   } else {
+  //     router.component = () => import(viewPath)
+  //   }
+
+  //   if (router.children && router.children.length > 0) {
+  //     filterAndEnhanceRouters(router.children)
+  //   }
+  // })
+  return routers
+}
+
+const testRouters = [
+  {
+    name: 'Systems',
+    children: [],
+    hidden: false,
+    meta: {
+      test: 'testValue',
+      title: '后台管理系统',
+      key: 'keyValue'
+    },
+    path: '/Systems',
+    redirect: 'noredirect',
+    // componentViewPath: "Layout"
+    component: Layout
+  }
+]
+
 const user = {
   state: { // token: getToken(),
     login: false,
@@ -27,7 +64,7 @@ const user = {
     SET_ROLES: (state, roles) => {
       state.roles = roles
     },
-    SET_ROLE_ROLTERS: (state, roleRouters) =>  {
+    SET_ROLE_ROUTERS: (state, roleRouters) => {
       state.roleRouters = roleRouters
     }
   },
@@ -63,12 +100,13 @@ const user = {
       })
     },
 
-    GetRouters({ commit, state }){
+    GetRouters({ commit, state }) {
       var p = new Promise((resolve, reject) => {
         getRouters().then(response => {
           console.log(`routers: ${response}`)
-          commit('SET_ROLE_ROUTERS', response)
-          resolve(response)
+          const routers = filterAndEnhanceRouters(testRouters)
+          commit('SET_ROLE_ROUTERS', routers)
+          resolve(routers)
         }).catch(error => {
           reject(error)
         })

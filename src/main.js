@@ -14,7 +14,7 @@ import store from './store'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-import {installAll} from '@/utils/plugins'
+import { installAll } from '@/utils/plugins'
 
 Vue.use(ElementUI, { locale })
 installAll(Vue)
@@ -25,9 +25,8 @@ new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App),
-
   created() {
     console.log(this.$http ? 'axios workd!' : 'axios uninstall~')
-  }
+  },
+  render: h => h(App)
 })
